@@ -1,8 +1,7 @@
 const TelegramApi = require("node-telegram-bot-api");
-
-const token = "5547233086:AAGAKj7G1emIx3LaDDij81u21e2xVEQB5-A";
-
-const bot = new TelegramApi(token, { polling: true });
+require("dotenv").config();
+const https = require("https");
+const bot = new TelegramApi(process.env.BOT_TOKEN, { polling: true });
 
 // bot.on('message', async msg => {
 //     console.log(msg);
@@ -26,7 +25,8 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
   const resp = match[1]; // the captured "whatever"
 
   // send back the matched "whatever" to the chat
-  bot.sendMessage(chatId, resp);
+  bot.sendMessage(chatId, chatId);
+  console.log(chatId);
 });
 
 bot.onText(/AnatolyViktorovichBot (.+)/, (msg, match) => {
@@ -47,13 +47,157 @@ bot.onText(/AnatolyViktorovichBot (.+)/, (msg, match) => {
     `${user} сегодня проходим "Руслан и Людмила"`,
     `${user} охарактеризуй личность Чичикова`,
     `${user} звонок для учителя!`,
-    `${user} я застрял в веб пространстве, теперь я навсегда тут...`,
+    `${user} я застрял в веб пространстве, кажется теперь я навсегда тут...`,
   ];
   const rand = Math.floor(Math.random() * 11);
 
   // send back the matched "whatever" to the chat
   bot.sendMessage(chatId, phrases[rand]);
 });
+
+// https.get(`https://api.telegram.org/AnatolyViktorovichBot:${process.env.BOT_TOKEN}/getUpdates`, res => {
+//   let data = [];
+//   const headerDate = res.headers && res.headers.date ? res.headers.date : 'no response date';
+//   console.log('Status Code:', res.statusCode);
+//   console.log('Date in Response header:', headerDate);
+
+//   res.on('data', chunk => {
+//     data.push(chunk);
+//   });
+
+//   res.on('end', () => {
+//     console.log('Response ended: ');
+//     const users = JSON.parse(Buffer.concat(data).toString());
+
+//   // console.log(users);
+//   });
+// }).on('error', err => {
+//   console.log('Error: ', err.message);
+// });
+
+// const getUpd = () => {
+//     return fetch(`https://api.telegram.org/bot:${process.env.BOT_TOKEN}/getUpdates`).then(res => res.json).then(data => data)
+// }
+const date = new Date().toLocaleDateString().substring(0, 6);
+const bdayDates = [
+  {
+    name: "Таня Белых",
+    dob: "23.10.",
+    sex: "дорогая",
+    isCongrtatulated: false,
+  },
+  {
+    name: "Аня Агасян",
+    dob: "11.11.",
+    sex: "дорогая",
+    isCongrtatulated: false,
+  },
+  {
+    name: "Руслан Кубиев",
+    dob: "16.12.",
+    sex: "дорогой",
+    isCongrtatulated: false,
+  },
+  {
+    name: "Вова Веселов",
+    dob: "17.01.",
+    sex: "дорогой",
+    isCongrtatulated: false,
+  },
+  {
+    name: "Бекхан Гудиев",
+    dob: "28.02.",
+    sex: "дорогой",
+    isCongrtatulated: false,
+  },
+  {
+    name: "Саша Лутовинов",
+    dob: "28.03.",
+    sex: "дорогой",
+    isCongrtatulated: false,
+  },
+  {
+    name: "Галя Оллерова",
+    dob: "26.04.",
+    sex: "дорогая",
+    isCongrtatulated: false,
+  },
+  {
+    name: "Кирилл Дундуков",
+    dob: "06.05.",
+    sex: "дорогой",
+    isCongrtatulated: false,
+  },
+  {
+    name: "Катя Суховерхова",
+    dob: "08.05.",
+    sex: "дорогая",
+    isCongrtatulated: false,
+  },
+  {
+    name: "Рита Бабаева",
+    dob: "17.06.",
+    sex: "дорогая",
+    isCongrtatulated: false,
+  },
+  {
+    name: "Арман Черхаров",
+    dob: "19.06.",
+    sex: "дорогой",
+    isCongrtatulated: false,
+  },
+  {
+    name: "Женя Помаскина",
+    dob: "06.07.",
+    sex: "дорогая",
+    isCongrtatulated: false,
+  },
+  {
+    name: "Валера Жутов",
+    dob: "06.07.",
+    sex: "дорогой",
+    isCongrtatulated: false,
+  },
+  {
+    name: "Оля Зеленина",
+    dob: "14.07.",
+    sex: "дорогая",
+    isCongrtatulated: false,
+  },
+  {
+    name: "Кирилл Гаврилин",
+    dob: "23.08.",
+    sex: "дорогой",
+    isCongrtatulated: false,
+  },
+  {
+    name: "Нарэ Сагиян",
+    dob: "29.08.",
+    sex: "дорогая",
+    isCongrtatulated: false,
+  },
+  {
+    name: "Лиза Эбаноидзе",
+    dob: "23.09.",
+    sex: "дорогой",
+    isCongrtatulated: false,
+  },
+];
+function congratWithBDay(bdayDates) {
+  bdayDates.forEach((person) => {
+    if (date === person.dob && !person.isisCongrtatulated) {
+      // console.log(`${person.name} с днем рождения ${person.sex}! Оставайся таким же красивым и добрым человеком! Передаю слово твоим однокласникам.`);
+      bot.sendMessage(
+        "-1001589814315",
+        `${person.name} с днем рождения ${person.sex}! Оставайся таким же красивым и добрым человеком! Передаю слово твоим однокласникам.`
+      );
+      person.isisCongrtatulated = true;
+    }
+  });
+}
+congratWithBDay(bdayDates);
+
+// console.log(congratWithBDay());
 
 // const { Telegraf } = require('telegraf');
 // require('dotenv').config()
