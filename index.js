@@ -93,6 +93,12 @@ const bdayDates = [
     isCongrtatulated: false,
   },
   {
+    name: "Сандро Твалиашвили",
+    dob: "25.11.",
+    sex: "дорогой",
+    isCongrtatulated: false,
+  },
+  {
     name: "Руслан Кубиев",
     dob: "16.12.",
     sex: "дорогой",
@@ -179,23 +185,31 @@ const bdayDates = [
   {
     name: "Лиза Эбаноидзе",
     dob: "23.09.",
-    sex: "дорогой",
+    sex: "дорогая",
+    isCongrtatulated: false,
+  },
+  {
+    name: "Рита Анисимова",
+    dob: "22.09.",
+    sex: "дорогая",
     isCongrtatulated: false,
   },
 ];
 function congratWithBDay(bdayDates) {
   bdayDates.forEach((person) => {
-    if (date === person.dob && !person.isisCongrtatulated) {
+    if (date === person.dob && !person.isCongrtatulated) {
       // console.log(`${person.name} с днем рождения ${person.sex}! Оставайся таким же красивым и добрым человеком! Передаю слово твоим однокласникам.`);
       bot.sendMessage(
         "-1001589814315",
-        `${person.name} с днем рождения ${person.sex}! Оставайся таким же красивым и добрым человеком! Передаю слово твоим однокласникам.`
+        `${person.name}, поздравляю с днем рождения, ${person.sex}! Оставайся таким же красивым и добрым человеком! Передаю слово твоим однокласникам.`
       );
-      person.isisCongrtatulated = true;
+      person.isCongrtatulated = true;
     }
   });
 }
 congratWithBDay(bdayDates);
+
+setInterval(congratWithBDay(bdayDates), 60000 * 1440);
 
 // console.log(congratWithBDay());
 
