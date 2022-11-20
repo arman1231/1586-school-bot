@@ -208,8 +208,8 @@ function congratWithBDay(bdayDates) {
   });
 }
 congratWithBDay(bdayDates);
-
-setInterval(congratWithBDay(bdayDates), 60000 * 1440);
+const day = 60000 * 1440
+setInterval(() => congratWithBDay(bdayDates), day);
 
 // console.log(congratWithBDay());
 
